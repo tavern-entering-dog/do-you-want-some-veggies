@@ -1,0 +1,158 @@
+[gd_scene load_steps=18 format=3 uid="uid://15c2udrya53f"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_7yfrf"]
+[ext_resource type="Texture2D" uid="uid://68aqfgsuky3g" path="res://assets/sprites/title.png" id="2_i06m3"]
+[ext_resource type="Script" path="res://scripts/title.gd" id="2_spp0g"]
+[ext_resource type="Texture2D" uid="uid://flnnne4rgbqp" path="res://assets/sprites/united_kingdom.png" id="3_7vcst"]
+[ext_resource type="Texture2D" uid="uid://dbbttbp5yh30t" path="res://assets/sprites/title_background.png" id="4_j57ky"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dm15y"]
+atlas = ExtResource("2_i06m3")
+region = Rect2(0, 0, 560, 136)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyd3a"]
+atlas = ExtResource("2_i06m3")
+region = Rect2(560, 0, 560, 136)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h71t4"]
+atlas = ExtResource("2_i06m3")
+region = Rect2(1120, 0, 560, 136)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxi8e"]
+atlas = ExtResource("2_i06m3")
+region = Rect2(1680, 0, 560, 136)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vd8m4"]
+atlas = ExtResource("2_i06m3")
+region = Rect2(2240, 0, 560, 136)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_es1y1"]
+atlas = ExtResource("2_i06m3")
+region = Rect2(1680, 0, 560, 136)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxtr1"]
+atlas = ExtResource("2_i06m3")
+region = Rect2(1120, 0, 560, 136)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0bte"]
+atlas = ExtResource("2_i06m3")
+region = Rect2(560, 0, 560, 136)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pc7fx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dm15y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dyd3a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h71t4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxi8e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vd8m4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_es1y1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxtr1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0bte")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_tmigb"]
+resource_name = "move"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 410)]
+}
+
+[sub_resource type="Animation" id="Animation_687tk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-650, -300)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g50sg"]
+_data = {
+"RESET": SubResource("Animation_687tk"),
+"move": SubResource("Animation_tmigb")
+}
+
+[node name="game" type="Node2D"]
+script = ExtResource("1_7yfrf")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_smoothed = true
+
+[node name="Game Manager" type="Node" parent="."]
+script = ExtResource("1_7yfrf")
+
+[node name="Title" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+script = ExtResource("2_spp0g")
+title_movement_velocity = null
+title_movement_height = 100
+
+[node name="Title Text" type="AnimatedSprite2D" parent="Title"]
+z_index = 1
+position = Vector2(-650, -300)
+sprite_frames = SubResource("SpriteFrames_pc7fx")
+autoplay = "default"
+frame_progress = 0.277617
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Title/Title Text"]
+libraries = {
+"": SubResource("AnimationLibrary_g50sg")
+}
+
+[node name="Title Background" type="TextureRect" parent="Title"]
+z_index = -1
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+texture = ExtResource("4_j57ky")
+metadata/_edit_lock_ = true
+
+[node name="Language Button" type="Button" parent="Title"]
+offset_left = -650.0
+offset_top = -300.0
+offset_right = -573.0
+offset_bottom = -253.0
+icon = ExtResource("3_7vcst")
+expand_icon = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Title/Language Button"]
+libraries = {
+"": SubResource("AnimationLibrary_g50sg")
+}
+
+[connection signal="pressed" from="Title/Language Button" to="." method="_on_language_button_pressed"]
