@@ -7,11 +7,14 @@ enum Languages {
 }
 
 @onready var language_button = $"Title/Language Button"
+@onready var player = $Player
 
 @export var language: Languages
 
+var game_started = false
 
-func _on_language_button_pressed():
+
+func toggle_language():
 	if language == Languages.English:
 		language = Languages.Spanish
 		language_button.icon = load("res://assets/sprites/spain.png")
@@ -19,6 +22,13 @@ func _on_language_button_pressed():
 		language = Languages.English
 		language_button.icon = load("res://assets/sprites/united_kingdom.png")
 
+func _on_language_button_pressed():
+	toggle_language()
 
 func _on_title_game_start():
-	pass # Replace with function body.
+	game_started = true
+	player.game_started = true
+
+func _process(_delta):
+	if Input.is_action_pressed("change_lang"):
+		toggle_language()

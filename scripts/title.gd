@@ -39,7 +39,13 @@ func _process(delta):
 		title.queue_free()
 
 func _input(event):
-	if event is InputEventKey and event.pressed:
+	if (event is InputEventKey and event.pressed)\
+	or (event is InputEventJoypadButton and event.pressed)\
+	or (Input.get_axis("move_left", "move_right") != 0)\
+	or (Input.get_axis("left_joystick_down", "left_joystick_up") != 0)\
+	or (Input.get_axis("left_joystick_left", "left_joystick_right") != 0)\
+	or (Input.get_axis("right_joystick_down", "right_joystick_up") != 0)\
+	or (Input.get_axis("right_joystick_left", "right_joystick_right") != 0):
 		title_text.get_child(0).play('move')
 		language_button.disabled = true
 		language_button.get_child(0).play('move')

@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://deivs6akoc4un"]
+
+[node name="Edible" type="Area2D"]
+metadata/edible = true
