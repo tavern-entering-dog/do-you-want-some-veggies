@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://15c2udrya53f"]
+[gd_scene load_steps=63 format=3 uid="uid://15c2udrya53f"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_7yfrf"]
 [ext_resource type="Shader" path="res://shaders/transparent.gdshader" id="2_4qh0g"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://ckxq1q1d8i47w" path="res://assets/sprites/ham.png" id="12_54map"]
 [ext_resource type="Texture2D" uid="uid://s7bnntcu3o6b" path="res://assets/sprites/salad.png" id="13_620j0"]
 [ext_resource type="Texture2D" uid="uid://dbyopp5he4ons" path="res://assets/sprites/beer.png" id="14_673og"]
+[ext_resource type="Texture2D" uid="uid://ddrjm6nvkgmss" path="res://assets/sprites/scene_2.png" id="15_ti44v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1tkq2"]
 shader = ExtResource("2_4qh0g")
@@ -346,6 +347,17 @@ size = Vector2(81, 51)
 radius = 24.0
 height = 56.0
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tl4aw"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wjcno"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ifv33"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0o4m0"]
+normal = Vector2(0, 1)
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_7yfrf")
 death_phrases = {
@@ -354,6 +366,8 @@ death_phrases = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(25, -325)
+zoom = Vector2(0.5, 0.5)
 limit_smoothed = true
 
 [node name="HUD" type="CanvasLayer" parent="Camera2D"]
@@ -385,10 +399,10 @@ anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -334.0
+offset_left = 242.0
 offset_top = -100.0
-offset_right = 334.0
-offset_bottom = 1196.0
+offset_right = 910.0
+offset_bottom = 12860.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.4, 0, 0, 1)
@@ -407,10 +421,10 @@ anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -401.0
+offset_left = 175.0
 offset_top = 700.0
-offset_right = -61.0
-offset_bottom = 1996.0
+offset_right = 515.0
+offset_bottom = 13660.0
 grow_horizontal = 2
 grow_vertical = 2
 auto_translate = false
@@ -432,7 +446,6 @@ libraries = {
 }
 
 [node name="Title" type="CanvasLayer" parent="."]
-visible = false
 follow_viewport_enabled = true
 script = ExtResource("2_spp0g")
 title_movement_velocity = 2
@@ -474,7 +487,6 @@ libraries = {
 }
 
 [node name="Player" parent="." instance=ExtResource("6_dtkok")]
-position = Vector2(-416, 70)
 
 [node name="Background" type="Node" parent="."]
 
@@ -489,6 +501,12 @@ autoplay = "default"
 [node name="Scene 1 Accessories" type="Sprite2D" parent="Background/Scene 1"]
 scale = Vector2(4, 4)
 texture = ExtResource("11_30fa0")
+
+[node name="Scene 2" type="Sprite2D" parent="Background"]
+z_index = -1
+position = Vector2(25, -325)
+scale = Vector2(8, 8)
+texture = ExtResource("15_ti44v")
 
 [node name="Edibles" type="Node" parent="."]
 
@@ -540,6 +558,41 @@ texture = ExtResource("14_673og")
 position = Vector2(-2, -1)
 shape = SubResource("CapsuleShape2D_w3po8")
 
+[node name="Boundaries" type="Node" parent="."]
+
+[node name="Left Boundary" type="RigidBody2D" parent="Boundaries"]
+position = Vector2(-550, 0)
+gravity_scale = 0.0
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Left Boundary"]
+shape = SubResource("WorldBoundaryShape2D_tl4aw")
+
+[node name="Right Boundary" type="RigidBody2D" parent="Boundaries"]
+position = Vector2(550, 0)
+gravity_scale = 0.0
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Right Boundary"]
+shape = SubResource("WorldBoundaryShape2D_wjcno")
+
+[node name="Bottom Boundary" type="RigidBody2D" parent="Boundaries"]
+position = Vector2(0, 253)
+gravity_scale = 0.0
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Bottom Boundary"]
+shape = SubResource("WorldBoundaryShape2D_ifv33")
+
+[node name="Top Boundary" type="RigidBody2D" parent="Boundaries"]
+position = Vector2(0, -325)
+gravity_scale = 0.0
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/Top Boundary"]
+shape = SubResource("WorldBoundaryShape2D_0o4m0")
+
 [connection signal="game_start" from="Title" to="." method="_on_title_game_start"]
 [connection signal="pressed" from="Title/Language Button" to="." method="_on_language_button_pressed"]
 [connection signal="death" from="Player" to="." method="_on_player_death"]
+[connection signal="next_scene" from="Player" to="." method="_on_player_next_scene"]

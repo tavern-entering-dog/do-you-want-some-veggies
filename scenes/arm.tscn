@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/arm.gd" id="1_txbwh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jr0r4"]
-size = Vector2(16, 23)
+size = Vector2(16, 12)
 
 [node name="Arm" type="Area2D"]
 script = ExtResource("1_txbwh")
@@ -16,7 +16,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_a2ufl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 71)
+position = Vector2(0, 82)
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_jr0r4")
 
