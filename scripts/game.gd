@@ -13,18 +13,30 @@ var uk_flag = null
 @onready var player = $Player
 @onready var camera_2d = $Camera2D
 @onready var hunger_meter = $"Camera2D/HUD/Hunger Meter"
+@onready var player_icon = $"Camera2D/HUD/Player icon"
+
+@onready var death_text = $"Camera2D/HUD/Death/Death Text"
+@onready var death_comment = $"Camera2D/HUD/Death/Death Comment"
+@onready var death_animation_player = $Camera2D/HUD/Death/AnimationPlayer
 
 @export var language: Languages
+
+@export var death_phrases: Dictionary
 
 var game_started = false
 var is_fullscreen = false
 
-var hunger = 100
+var player_icons = []
 
 func _ready():
 	spanish_flag = load("res://assets/sprites/spain.png")
 	uk_flag = load("res://assets/sprites/united_kingdom.png")
-	
+
+	player_icons.append(load("res://assets/sprites/player_icon_dead.png"))
+	player_icons.append(load("res://assets/sprites/player_icon_bad.png"))
+	player_icons.append(load("res://assets/sprites/player_icon_ok.png"))	
+	player_icons.append(load("res://assets/sprites/player_icon_perfect.png"))
+
 
 func toggle_language():
 	if language == Languages.English:
@@ -54,5 +66,16 @@ func _process(_delta):
 	   and language_button:
 			toggle_language()
 
-	if player:
-		hunger_meter.value = player.hunger
+	hunger_meter.value = player.hunger
+	player_icon.texture = player_icons[ceil(3*player.hunger/player.max_hunger)]
+
+func _on_player_death():
+	if language == Languages.English:
+		death_text.text = "You Starved to Death"
+		death_comment.text = death_phrases["english"]\
+			[randi() % len(death_phrases["english"])]
+	elif language == Languages.Spanish:
+		death_text.text = "Te Moriste de Hambre"
+		death_comment.text = death_phrases["spanish"]\
+			[randi() % len(death_phrases["spanish"])]
+	death_animation_player.play("death_message_show")

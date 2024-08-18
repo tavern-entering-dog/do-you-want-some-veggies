@@ -1,18 +1,91 @@
-[gd_scene load_steps=30 format=3 uid="uid://15c2udrya53f"]
+[gd_scene load_steps=58 format=3 uid="uid://15c2udrya53f"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_7yfrf"]
 [ext_resource type="Shader" path="res://shaders/transparent.gdshader" id="2_4qh0g"]
 [ext_resource type="Texture2D" uid="uid://68aqfgsuky3g" path="res://assets/sprites/title.png" id="2_i06m3"]
 [ext_resource type="Script" path="res://scripts/title.gd" id="2_spp0g"]
 [ext_resource type="Texture2D" uid="uid://flnnne4rgbqp" path="res://assets/sprites/united_kingdom.png" id="3_7vcst"]
+[ext_resource type="Shader" path="res://shaders/die_text.gdshader" id="3_55uxr"]
+[ext_resource type="FontFile" uid="uid://p4jquj05bc75" path="res://assets/fonts/doggobark-serif.ttf" id="3_n3tx8"]
+[ext_resource type="Texture2D" uid="uid://duwb60ea20hxj" path="res://assets/sprites/health_bar.png" id="3_qcncl"]
+[ext_resource type="Texture2D" uid="uid://87v15juaymtl" path="res://assets/sprites/player_icon_perfect.png" id="4_3xseo"]
 [ext_resource type="Texture2D" uid="uid://dbbttbp5yh30t" path="res://assets/sprites/title_background.png" id="4_j57ky"]
+[ext_resource type="FontFile" uid="uid://dy15p7qros583" path="res://assets/fonts/JinxedWizards.ttf" id="4_t3ooc"]
 [ext_resource type="PackedScene" uid="uid://brcs0q1bm23ks" path="res://scenes/player.tscn" id="6_dtkok"]
 [ext_resource type="PackedScene" uid="uid://deivs6akoc4un" path="res://scenes/edible.tscn" id="7_tniya"]
-[ext_resource type="Texture2D" uid="uid://c03sjtklu1tne" path="res://assets/sprites/spain.png" id="8_la47r"]
-[ext_resource type="Texture2D" uid="uid://ckgm73ointsxj" path="res://assets/sprites/background.png" id="9_ivwn0"]
+[ext_resource type="Texture2D" uid="uid://d4lroi0xapcwx" path="res://assets/sprites/scene_1.png" id="10_lf8rj"]
+[ext_resource type="Texture2D" uid="uid://b4w16yv2h13u7" path="res://assets/sprites/scene_1_accessories.png" id="11_30fa0"]
+[ext_resource type="Texture2D" uid="uid://ciru7c8ao8iin" path="res://assets/sprites/cake.png" id="11_libmp"]
+[ext_resource type="Texture2D" uid="uid://ckxq1q1d8i47w" path="res://assets/sprites/ham.png" id="12_54map"]
+[ext_resource type="Texture2D" uid="uid://s7bnntcu3o6b" path="res://assets/sprites/salad.png" id="13_620j0"]
+[ext_resource type="Texture2D" uid="uid://dbyopp5he4ons" path="res://assets/sprites/beer.png" id="14_673og"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1tkq2"]
 shader = ExtResource("2_4qh0g")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r742t"]
+shader = ExtResource("3_55uxr")
+shader_parameter/amplitude = 10.0
+
+[sub_resource type="Animation" id="Animation_2s0vr"]
+resource_name = "death_message_show"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Death/Death Text:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(242, -100), Vector2(242, 294)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Death/Death Comment:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(175, 700), Vector2(175, 420)]
+}
+
+[sub_resource type="Animation" id="Animation_jcg0u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Death/Death Text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(242, -100)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Death/Death Comment:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(175, 700)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rwi1l"]
+_data = {
+"RESET": SubResource("Animation_jcg0u"),
+"death_message_show": SubResource("Animation_2s0vr")
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dm15y"]
 atlas = ExtResource("2_i06m3")
@@ -144,7 +217,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-550, -300), Vector2(-650, -300)]
+"values": [Vector2(-525, -300), Vector2(-650, -300)]
 }
 
 [sub_resource type="Animation" id="Animation_b2nfx"]
@@ -168,12 +241,117 @@ _data = {
 "move_back": SubResource("Animation_b2nfx")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5tln3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_53ctj"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(0, 0, 288, 162)
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_swxup"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8d50"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(288, 0, 288, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdflb"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(576, 0, 288, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khtbg"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(864, 0, 288, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0qno"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(576, 0, 288, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fjbi"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(288, 0, 288, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_06hm4"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(0, 0, 288, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gg0k"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(1152, 0, 288, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbr8i"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(1440, 0, 288, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5sbn"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(1728, 0, 288, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyubk"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(1440, 0, 288, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty08u"]
+atlas = ExtResource("10_lf8rj")
+region = Rect2(1152, 0, 288, 162)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rvvdv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_53ctj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i8d50")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdflb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khtbg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0qno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fjbi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_06hm4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gg0k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbr8i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5sbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nyubk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ty08u")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_arpig"]
+radius = 41.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fa5fb"]
+radius = 39.0512
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_imp8j"]
+size = Vector2(81, 51)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w3po8"]
+radius = 24.0
+height = 56.0
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_7yfrf")
+death_phrases = {
+"english": ["Not bad for a skinny little guy...", "C'mon, even my granny can do better than that!", "I've seen girls who eat more than you do, just saying", "\"Mom was right, I needed that extra sugar\"", "\"Can't wait to poop all this food\"", "Are you still hungry buddy?", "* But your soul refused to die      -- Nah, just kidding", "Don't you feel kinda hungry after all this?", "ඞ", "Press any key to restart"],
+"spanish": ["No está mal para un tipo flacucho y enclenque...", "¡Vamos, joder! Hasta mi abuela puede con eso", "Solo digo que he visto a niñitas comer más", "\"Mami tenía razón, necesitaba ese azúcar extra\"", "\"Me muero de ganas de cagar todo esto\"", "¿Todavía quieres comer amiguito?", "* Pero tu alma se negó a morir      -- Nah, es coña", "¿No te da ganas de comer jugar a este juego?", "ඞ", "Presiona cualquier botón para volver a empezar"]
+}
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_smoothed = true
@@ -186,14 +364,75 @@ offset_left = 2.0
 offset_right = 1154.0
 offset_bottom = 648.0
 
-[node name="Hunger Meter" type="ProgressBar" parent="Camera2D/HUD"]
-offset_right = 58.0
-offset_bottom = 35.0
+[node name="Hunger Meter" type="TextureProgressBar" parent="Camera2D/HUD"]
+offset_left = 100.0
+offset_right = 260.0
+offset_bottom = 81.0
+scale = Vector2(1.5, 1.5)
+texture_progress = ExtResource("3_qcncl")
 
-[node name="Game Manager" type="Node" parent="."]
-script = ExtResource("1_7yfrf")
+[node name="Player icon" type="Sprite2D" parent="Camera2D/HUD"]
+z_index = 1
+position = Vector2(72, 72)
+scale = Vector2(3, 3)
+texture = ExtResource("4_3xseo")
+
+[node name="Death" type="Node" parent="Camera2D/HUD"]
+
+[node name="Death Text" type="Label" parent="Camera2D/HUD/Death"]
+material = SubResource("ShaderMaterial_r742t")
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -334.0
+offset_top = -100.0
+offset_right = 334.0
+offset_bottom = 1196.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.4, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("4_t3ooc")
+theme_override_font_sizes/font_size = 64
+text = "You Starved to Death"
+horizontal_alignment = 1
+
+[node name="Death Comment" type="Label" parent="Camera2D/HUD/Death"]
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -401.0
+offset_top = 700.0
+offset_right = -61.0
+offset_bottom = 1996.0
+grow_horizontal = 2
+grow_vertical = 2
+auto_translate = false
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_n3tx8")
+theme_override_font_sizes/font_size = 32
+text = "You Starved to Death"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/HUD/Death"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_rwi1l")
+}
 
 [node name="Title" type="CanvasLayer" parent="."]
+visible = false
 follow_viewport_enabled = true
 script = ExtResource("2_spp0g")
 title_movement_velocity = 2
@@ -221,9 +460,9 @@ texture = ExtResource("4_j57ky")
 metadata/_edit_lock_ = true
 
 [node name="Language Button" type="Button" parent="Title"]
-offset_left = -550.0
+offset_left = -525.0
 offset_top = -300.0
-offset_right = -473.0
+offset_right = -448.0
 offset_bottom = -253.0
 icon = ExtResource("3_7vcst")
 expand_icon = true
@@ -237,24 +476,70 @@ libraries = {
 [node name="Player" parent="." instance=ExtResource("6_dtkok")]
 position = Vector2(-416, 70)
 
-[node name="Edible" parent="." instance=ExtResource("7_tniya")]
+[node name="Background" type="Node" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="Edible"]
-texture = ExtResource("8_la47r")
+[node name="Scene 1" type="Node" parent="Background"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Edible"]
-shape = SubResource("RectangleShape2D_5tln3")
-
-[node name="Background" type="Area2D" parent="."]
+[node name="Scene 1 Background" type="AnimatedSprite2D" parent="Background/Scene 1"]
 z_index = -1
-scale = Vector2(10.15, 10.15)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_rvvdv")
+autoplay = "default"
 
-[node name="Sprite2D" type="Sprite2D" parent="Background"]
-texture = ExtResource("9_ivwn0")
+[node name="Scene 1 Accessories" type="Sprite2D" parent="Background/Scene 1"]
+scale = Vector2(4, 4)
+texture = ExtResource("11_30fa0")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Background"]
-position = Vector2(0, 19.4545)
-shape = SubResource("WorldBoundaryShape2D_swxup")
+[node name="Edibles" type="Node" parent="."]
+
+[node name="Scene 1" type="Node" parent="Edibles"]
+
+[node name="Cake" parent="Edibles/Scene 1" instance=ExtResource("7_tniya")]
+position = Vector2(390, 70)
+metadata/nutrients = 25.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Edibles/Scene 1/Cake"]
+scale = Vector2(6, 6)
+texture = ExtResource("11_libmp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Edibles/Scene 1/Cake"]
+shape = SubResource("CircleShape2D_arpig")
+
+[node name="Ham" parent="Edibles/Scene 1" instance=ExtResource("7_tniya")]
+position = Vector2(170, 70)
+metadata/nutrients = 25.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Edibles/Scene 1/Ham"]
+scale = Vector2(6, 6)
+texture = ExtResource("12_54map")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Edibles/Scene 1/Ham"]
+shape = SubResource("CircleShape2D_fa5fb")
+
+[node name="Salad" parent="Edibles/Scene 1" instance=ExtResource("7_tniya")]
+position = Vector2(280, 75)
+metadata/nutrients = 25.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Edibles/Scene 1/Salad"]
+scale = Vector2(6, 6)
+texture = ExtResource("13_620j0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Edibles/Scene 1/Salad"]
+position = Vector2(-1.5, 5.5)
+shape = SubResource("RectangleShape2D_imp8j")
+
+[node name="Beer" parent="Edibles/Scene 1" instance=ExtResource("7_tniya")]
+position = Vector2(455, -185)
+metadata/nutrients = 25.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Edibles/Scene 1/Beer"]
+scale = Vector2(4, 4)
+texture = ExtResource("14_673og")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Edibles/Scene 1/Beer"]
+position = Vector2(-2, -1)
+shape = SubResource("CapsuleShape2D_w3po8")
 
 [connection signal="game_start" from="Title" to="." method="_on_title_game_start"]
 [connection signal="pressed" from="Title/Language Button" to="." method="_on_language_button_pressed"]
+[connection signal="death" from="Player" to="." method="_on_player_death"]

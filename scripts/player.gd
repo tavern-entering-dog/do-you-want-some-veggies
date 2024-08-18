@@ -1,11 +1,14 @@
 extends CharacterBody2D
 
 
+signal death
+
 @onready var animated_sprite_2d = $AnimatedSprite2D
 
 @onready var left_arm = $"Left Arm"
 @onready var right_arm = $"Right Arm"
 @onready var eating_timer = $"Eating Timer"
+@onready var death_timer = $"Death Timer"
 @onready var eating_particles = $"Eating Particles"
 @onready var animation_player = $AnimationPlayer
 
@@ -16,11 +19,13 @@ var right_arm_position = Vector2(0, 0)
 @export var jump_velocity = -400.0
 @export var arm_down_speed = 1
 
+@export var max_hunger = 100
 @export var hunger = 100
 
 var game_started = false
 var eating = false
 var dead = false
+var can_restart = false
 
 var time_elapsed = 0
 var time_start = 0
@@ -47,8 +52,8 @@ func _physics_process(delta):
 			animation_player.stop()
 			if direction < 0:
 				animated_sprite_2d.flip_h = true
-				left_arm.position = left_arm_position + Vector2(10, 0)
-				right_arm.position = right_arm_position + Vector2(10, 0)
+				left_arm.position = left_arm_position + Vector2(15, 0)
+				right_arm.position = right_arm_position + Vector2(15, 0)
 			elif direction > 0:
 				animated_sprite_2d.flip_h = false
 				left_arm.position = left_arm_position
@@ -96,8 +101,10 @@ func _physics_process(delta):
 			animation_player.stop()
 			animated_sprite_2d.play("die")
 			animation_player.play("arms_dying")
-	elif dead:
-		pass
+			death_timer.start()
+	elif dead and can_restart:
+		if Input.is_anything_pressed():
+			get_tree().reload_current_scene()
 
 	left_arm.rotation /= 1 + arm_down_speed*delta
 	right_arm.rotation /= 1 + arm_down_speed*delta
@@ -106,6 +113,7 @@ func _physics_process(delta):
 func _on_head_area_entered(area):
 	if area.has_meta("edible"):
 		area.queue_free()
+		hunger += area.get_meta("nutrients")
 		eating = true
 		animated_sprite_2d.play("eating")
 		Engine.time_scale = 0.5
@@ -114,6 +122,8 @@ func _on_head_area_entered(area):
 		for child in area.get_child(2).get_children():
 			if child.get_meta("edible"):
 				area.get_child(2).remove_child(child)
+				if area.has_meta("nutrients"):
+					hunger += area.get_meta("nutrients")
 				eating = true
 				animated_sprite_2d.play("eating")
 				Engine.time_scale = 0.5
@@ -123,3 +133,8 @@ func _on_eating_timer_timeout():
 	eating_particles.emitting = true
 	eating = false
 	Engine.time_scale = 1
+
+
+func _on_death_timer_timeout():
+	death.emit()
+	can_restart = true

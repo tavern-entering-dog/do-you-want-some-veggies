@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://brcs0q1bm23ks"]
+[gd_scene load_steps=31 format=3 uid="uid://brcs0q1bm23ks"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kkdto"]
 [ext_resource type="Texture2D" uid="uid://bjk5sj3mabhar" path="res://assets/sprites/main_character.png" id="1_lbban"]
@@ -147,11 +147,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dtmk5"]
-size = Vector2(127, 185)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jwbjg"]
+radius = 52.0
+height = 312.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j81yl"]
-radius = 30.0
+radius = 39.3192
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ubwdb"]
 lifetime_randomness = 1.0
@@ -165,35 +166,6 @@ initial_velocity_max = 80.0
 gravity = Vector3(0, 0, 0)
 scale_min = 1.75
 scale_max = 2.25
-
-[sub_resource type="Animation" id="Animation_ixsvj"]
-resource_name = "arms_idle"
-length = 0.625
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Left Arm:position")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(-55, -15), Vector2(-55, -17.5), Vector2(-55, -20)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Right Arm:position")
-tracks/1/interp = 0
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(45, -15), Vector2(45, -17.5), Vector2(45, -20)]
-}
 
 [sub_resource type="Animation" id="Animation_dcxjr"]
 length = 0.001
@@ -259,7 +231,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5, 1, 1.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(-55, -15), Vector2(-55, -10), Vector2(-55, 25), Vector2(-55, 75)]
+"values": [Vector2(-70, -15), Vector2(-70, -10), Vector2(-70, 25), Vector2(-70, 75)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -271,7 +243,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5, 1, 1.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(45, -15), Vector2(45, -10), Vector2(45, 25), Vector2(45, 75)]
+"values": [Vector2(55, -15), Vector2(55, -10), Vector2(55, 25), Vector2(55, 75)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -298,46 +270,133 @@ tracks/3/keys = {
 "values": [-0.785398]
 }
 
+[sub_resource type="Animation" id="Animation_ixsvj"]
+resource_name = "arms_idle"
+length = 0.625
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Left Arm:position")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-70, -15), Vector2(-70, -17.5), Vector2(-70, -20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Right Arm:position")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(55, -15), Vector2(55, -17.5), Vector2(55, -20)]
+}
+
+[sub_resource type="Animation" id="Animation_aeab8"]
+resource_name = "arms_start"
+length = 0.625
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Left Arm:position")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-70, -20), Vector2(-70, -17.5), Vector2(-70, -15)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Right Arm:position")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(55, -20), Vector2(55, -17.5), Vector2(55, -15)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Left Arm:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Right Arm:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cos0s"]
 _data = {
 "RESET": SubResource("Animation_dcxjr"),
 "arms_dying": SubResource("Animation_th5n5"),
-"arms_idle": SubResource("Animation_ixsvj")
+"arms_idle": SubResource("Animation_ixsvj"),
+"arms_start": SubResource("Animation_aeab8")
 }
 
 [node name="Player" type="CharacterBody2D"]
-scale = Vector2(1.25, 1.25)
 script = ExtResource("1_kkdto")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(2.5, 2.5)
+scale = Vector2(3.125, 3.125)
 sprite_frames = SubResource("SpriteFrames_hjpr8")
 animation = &"die"
 autoplay = "idle"
-frame = 3
-frame_progress = 0.184416
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-8.5, 50.5)
-shape = SubResource("RectangleShape2D_dtmk5")
+position = Vector2(-11, 20)
+shape = SubResource("CapsuleShape2D_jwbjg")
 
 [node name="Left Arm" parent="." instance=ExtResource("3_c6d2x")]
 position = Vector2(-55, -15)
 rotation = 0.785398
+scale = Vector2(1.25, 1.25)
 orientation = 0
 
 [node name="Right Arm" parent="." instance=ExtResource("3_c6d2x")]
 position = Vector2(45, -15)
 rotation = -0.785398
+scale = Vector2(1.25, 1.25)
 
 [node name="Head" type="Area2D" parent="."]
 position = Vector2(-10, -75)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Head"]
+position = Vector2(1, -8)
 shape = SubResource("CircleShape2D_j81yl")
 
 [node name="Eating Timer" type="Timer" parent="."]
 wait_time = 0.5
+one_shot = true
+
+[node name="Death Timer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 
 [node name="Eating Particles" type="GPUParticles2D" parent="."]
@@ -353,7 +412,8 @@ randomness = 0.25
 libraries = {
 "": SubResource("AnimationLibrary_cos0s")
 }
-autoplay = "arms_idle"
+autoplay = "arms_start"
 
 [connection signal="area_entered" from="Head" to="." method="_on_head_area_entered"]
 [connection signal="timeout" from="Eating Timer" to="." method="_on_eating_timer_timeout"]
+[connection signal="timeout" from="Death Timer" to="." method="_on_death_timer_timeout"]

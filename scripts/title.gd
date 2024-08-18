@@ -47,7 +47,8 @@ func _input(event):
 	or (Input.get_axis("right_joystick_down", "right_joystick_up") != 0)\
 	or (Input.get_axis("right_joystick_left", "right_joystick_right") != 0))\
 	and not (Input.is_action_pressed("change_lang"))\
-	and not (Input.is_action_pressed("toggle_fullscreen")):
+	and not (Input.is_action_pressed("toggle_fullscreen"))\
+	and time_elapsed > 1:
 		title_text.get_child(0).play('move')
 		language_button.disabled = true
 		language_button.get_child(0).play('move')

@@ -2,3 +2,4 @@
 
 [node name="Edible" type="Area2D"]
 metadata/edible = true
+metadata/nutrients = 0.0
