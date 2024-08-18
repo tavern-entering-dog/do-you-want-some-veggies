@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://digili8r3f6h4"]
+
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="1_0e0jv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jjgi2"]
+shader = ExtResource("1_0e0jv")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/scan_line_amount = 1.0
+shader_parameter/warp_amount = 0.1
+shader_parameter/noise_amount = 0.03
+shader_parameter/interference_amount = 0.2
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.6
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.5
+shader_parameter/roll_line_amount = 0.3
+shader_parameter/roll_speed = 1.0
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
+
+[node name="CRT Screen Shader" type="ColorRect"]
+material = SubResource("ShaderMaterial_jjgi2")
+offset_left = 2.0
+offset_right = 1154.0
+offset_bottom = 648.0

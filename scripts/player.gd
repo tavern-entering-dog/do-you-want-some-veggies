@@ -6,7 +6,9 @@ signal next_scene(
 	number: int,
 	camera_zoom: float,
 	border_coordinates: Array,
-	camera_coordinates: Vector2
+	camera_coordinates: Vector2,
+	height: int,
+	max_hunger: int
 )
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
@@ -56,7 +58,7 @@ var time_start = 0
 			Vector2(0, 253),
 			Vector2(0, -325)
 		],
-		"height": "183 cm"
+		"height": "1.83 m"
 	},
 	{
 		"metabolism_speed": 5,
@@ -66,15 +68,21 @@ var time_start = 0
 		"camera_zoom": 0.5,
 		"camera_coordinates": Vector2(25, -325),
 		"border_coordinates": [
-			Vector2(-950, 0),
-			Vector2(950, 0),
+			Vector2(-1100, 0),
+			Vector2(1100, 0),
 			Vector2(0, 253),
 			Vector2(0, -950)
 		],
+		"height": "6.1 m"
 	},
 	{
 		"metabolism_speed": 10,
-		"max_hunger": 300
+		"max_hunger": 300,
+		"target_player_size": 12,
+		"target_player_y_position": -2000,
+		"camera_zoom": 0.125,
+		"camera_coordinates": Vector2(153, -1932),
+		"border_coordinates": []
 	},
 	{
 		"metabolism_speed": 20,
@@ -100,6 +108,8 @@ func _ready():
 	left_arm.rotation = 0
 	right_arm_position = right_arm.position
 	right_arm.rotation = 0
+	eating_particles.process_material.scale_min = 1.75
+	eating_particles.process_material.scale_max = 2.25
 
 func _physics_process(delta):
 	if not is_on_floor() and not eating:
@@ -213,7 +223,10 @@ func _on_eating_timer_timeout():
 		next_scene.emit(current_scene,
 			scene_data[current_scene]["camera_zoom"],
 			scene_data[current_scene]["border_coordinates"],
-			scene_data[current_scene]["camera_coordinates"])
+			scene_data[current_scene]["camera_coordinates"],
+			scene_data[current_scene]["height"],
+			scene_data[current_scene]["max_hunger"]
+		)
 		transitioning = true
 		transition_metadata["y_position"] = scene_data[current_scene]["target_player_y_position"]
 		transition_metadata["size"] = scene_data[current_scene]["target_player_size"]

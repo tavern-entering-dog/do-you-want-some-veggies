@@ -114,12 +114,16 @@ func _on_player_next_scene(
 	number,
 	camera_zoom,
 	border_coordinates,
-	camera_coordinates
+	camera_coordinates,
+	height,
+	max_hunger
 ):
 	left_boundary.position = border_coordinates[0]
 	right_boundary.position = border_coordinates[1]
 	bottom_boundary.position = border_coordinates[2]
 	top_boundary.position = border_coordinates[3]
+	hunger_meter.max_value = max_hunger
+	hunger_meter.scale.x *= max_hunger / player.scene_data[number-1]["max_hunger"] 
 	transition_metadata["zoom"] = Vector2(camera_zoom, camera_zoom)
 	transition_metadata["position"] = camera_coordinates
 	transitioning = true
