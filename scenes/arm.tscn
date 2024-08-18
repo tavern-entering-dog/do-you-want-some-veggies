@@ -8,6 +8,7 @@ size = Vector2(16, 23)
 
 [node name="Arm" type="Area2D"]
 script = ExtResource("1_txbwh")
+metadata/arm = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 47)

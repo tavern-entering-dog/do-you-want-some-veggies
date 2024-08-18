@@ -20,7 +20,7 @@ func periodic_sigmoid(h: float, k: float, t: float) -> float:
 
 func _ready():
 	base_title_position = title_text.position.y
-	title_background.modulate.a = 0.5
+	title_background.modulate.a = 0.25
 
 func _process(delta):
 	if title_screen:
@@ -33,19 +33,21 @@ func _process(delta):
 			)
 	else:
 		if not title_background.modulate.a == 0:
-			title_background.modulate.a = max(title_background.modulate.a - delta/2, 0)
+			title_background.modulate.a = max(title_background.modulate.a - delta/4, 0)
 			return
 		game_start.emit()
 		title.queue_free()
 
 func _input(event):
-	if (event is InputEventKey and event.pressed)\
+	if ((event is InputEventKey and event.pressed)\
 	or (event is InputEventJoypadButton and event.pressed)\
 	or (Input.get_axis("move_left", "move_right") != 0)\
 	or (Input.get_axis("left_joystick_down", "left_joystick_up") != 0)\
 	or (Input.get_axis("left_joystick_left", "left_joystick_right") != 0)\
 	or (Input.get_axis("right_joystick_down", "right_joystick_up") != 0)\
-	or (Input.get_axis("right_joystick_left", "right_joystick_right") != 0):
+	or (Input.get_axis("right_joystick_left", "right_joystick_right") != 0))\
+	and not (Input.is_action_pressed("change_lang"))\
+	and not (Input.is_action_pressed("toggle_fullscreen")):
 		title_text.get_child(0).play('move')
 		language_button.disabled = true
 		language_button.get_child(0).play('move')
