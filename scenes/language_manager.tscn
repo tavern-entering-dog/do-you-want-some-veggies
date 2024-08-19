@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://btbmn34upbasn"]
+
+[node name="Language Manager" type="Node"]
+metadata/english = true

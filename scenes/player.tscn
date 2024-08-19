@@ -1,9 +1,18 @@
-[gd_scene load_steps=34 format=3 uid="uid://brcs0q1bm23ks"]
+[gd_scene load_steps=39 format=3 uid="uid://brcs0q1bm23ks"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kkdto"]
 [ext_resource type="Texture2D" uid="uid://bjk5sj3mabhar" path="res://assets/sprites/main_character.png" id="1_lbban"]
 [ext_resource type="PackedScene" uid="uid://dlo46m0wcbnsq" path="res://scenes/arm.tscn" id="3_c6d2x"]
 [ext_resource type="Texture2D" uid="uid://fm4lwkbv60cg" path="res://assets/sprites/star.png" id="4_rmjg3"]
+[ext_resource type="AudioStream" uid="uid://brdpc22lvl1y2" path="res://assets/sfx/jump.mp3" id="5_wvcyj"]
+[ext_resource type="AudioStream" uid="uid://dppq3babl8gv5" path="res://assets/sfx/eating.mp3" id="6_v46f1"]
+[ext_resource type="AudioStream" uid="uid://b38ffunfati0d" path="res://assets/sfx/hurt.mp3" id="7_jfdtb"]
+[ext_resource type="AudioStream" uid="uid://ynj1mm3o6kyy" path="res://assets/sfx/propulsion.mp3" id="8_umop0"]
+[ext_resource type="AudioStream" uid="uid://c3xh12tfra7ni" path="res://assets/sfx/growing.mp3" id="9_wvddy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cu2vp"]
+atlas = ExtResource("1_lbban")
+region = Rect2(2176, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_62q4t"]
 atlas = ExtResource("1_lbban")
@@ -57,10 +66,6 @@ region = Rect2(0, 0, 128, 128)
 atlas = ExtResource("1_lbban")
 region = Rect2(2048, 0, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_80x5j"]
-atlas = ExtResource("1_lbban")
-region = Rect2(2176, 0, 128, 128)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_ded7u"]
 atlas = ExtResource("1_lbban")
 region = Rect2(512, 0, 128, 128)
@@ -83,6 +88,14 @@ region = Rect2(1024, 0, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hjpr8"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cu2vp")
+}],
+"loop": true,
+"name": &"descending",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_62q4t")
@@ -137,11 +150,8 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4np0w")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_80x5j")
 }],
-"loop": false,
+"loop": true,
 "name": &"jumping",
 "speed": 5.0
 }, {
@@ -415,10 +425,8 @@ transition_speed = 3.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(3.125, 3.125)
 sprite_frames = SubResource("SpriteFrames_hjpr8")
-animation = &"jumping"
+animation = &"descending"
 autoplay = "idle"
-frame = 1
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-11, 20)
@@ -470,6 +478,39 @@ libraries = {
 autoplay = "arms_start"
 
 [node name="Transition Timer" type="Timer" parent="."]
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="Jump Sound" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2(-370, 70)
+stream = ExtResource("5_wvcyj")
+max_distance = 1e+06
+bus = &"SFX"
+
+[node name="Eating Sound" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2(-370, 70)
+stream = ExtResource("6_v46f1")
+max_distance = 1e+06
+bus = &"SFX"
+
+[node name="Hurt Sound" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2(-370, 70)
+stream = ExtResource("7_jfdtb")
+volume_db = 10.0
+max_distance = 1e+06
+bus = &"SFX"
+
+[node name="Propulsion Sound" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2(-370, 70)
+stream = ExtResource("8_umop0")
+max_distance = 1e+06
+bus = &"SFX"
+
+[node name="Growing Sound" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2(-370, 70)
+stream = ExtResource("9_wvddy")
+volume_db = -10.0
+max_distance = 1e+06
 
 [connection signal="area_entered" from="Head" to="." method="_on_head_area_entered"]
 [connection signal="timeout" from="Eating Timer" to="." method="_on_eating_timer_timeout"]

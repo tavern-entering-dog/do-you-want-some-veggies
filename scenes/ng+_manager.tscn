@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://b7ewk4indmwwp"]
+
+[node name="NG+ Manager" type="Node"]
+metadata/times_beaten = 0
