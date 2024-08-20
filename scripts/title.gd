@@ -7,7 +7,6 @@ signal game_start
 @onready var title_background = $"Title Background"
 @onready var language_button = $"Language Button"
 @onready var title = $"."
-@onready var move_animation_timer = $"Move Animation Timer"
 @onready var game_manager = $"../Game Manager"
 
 @export var title_movement_velocity = 1
@@ -38,6 +37,7 @@ func _process(delta):
 			title_background.modulate.a = max(title_background.modulate.a - delta/4, 0)
 			return
 		game_start.emit()
+		game_manager.game_started = true
 		title.queue_free()
 
 func _input(event):
@@ -47,15 +47,14 @@ func _input(event):
 	or (Input.get_axis("left_joystick_down", "left_joystick_up") != 0)\
 	or (Input.get_axis("left_joystick_left", "left_joystick_right") != 0)\
 	or (Input.get_axis("right_joystick_down", "right_joystick_up") != 0)\
-	or (Input.get_axis("right_joystick_left", "right_joystick_right") != 0))\
+	or (Input.get_axis("right_joystick_left", "right_joystick_right") != 0)\
+	or Input.is_action_just_pressed("left_click")\
+	or Input.is_action_just_pressed("right_click"))\
 	and not (Input.is_action_pressed("change_lang"))\
 	and not (Input.is_action_pressed("toggle_fullscreen"))\
+	and not (Input.is_action_pressed("pause"))\
 	and time_elapsed > 1:
 		title_text.get_child(0).play('move')
 		language_button.disabled = true
 		language_button.get_child(0).play('move')
 		title_screen = false
-		move_animation_timer.start()
-
-func _on_move_animation_timer_timeout():
-	game_manager.game_started = true

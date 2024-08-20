@@ -83,6 +83,7 @@ func scene_song(scene_number: int):
 
 func _ready():
 	scene_1_music.volume_db = 0
+	scene_1_music.play()
 	scene_2_music.volume_db = -80
 	scene_3_sound.volume_db = -80
 	scene_3_music.volume_db = -80

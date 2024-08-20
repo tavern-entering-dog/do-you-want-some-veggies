@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/JinxedWizards.ttf-1e0df0dd4ff9dc1d278fbc10634
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

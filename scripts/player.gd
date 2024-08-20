@@ -160,10 +160,11 @@ var current_scene = 0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-func self_scale(ratio: float) -> void:
-	scale *= ratio
-	eating_particles.process_material.scale_min += ratio
-	eating_particles.process_material.scale_max += ratio
+func rumble(weak, strong, duration):
+	#for device in Input.get_connected_joypads():
+		#Input.start_joy_vibration(device, weak, strong, duration)
+
+	pass # Apparently not working on Godot right now?
 
 func _ready():
 	left_arm_position = left_arm.position
@@ -251,6 +252,7 @@ func _physics_process(delta):
 		else:
 			hurt_sound.play()
 			dead = true
+			game_manager.dead = true
 			eating = false
 			Engine.time_scale = 1
 			animation_player.stop()
@@ -272,6 +274,8 @@ func _physics_process(delta):
 		if (abs(position.y - transition_metadata["y_position"]) < abs(transition_metadata["y_position"]/100.))\
 		and (abs(scale.x - transition_metadata["size"]) < abs(transition_metadata["size"]/100.)):
 			transitioning = false
+			#for device in Input.get_connected_joypads():
+				#Input.stop_joy_vibration(device)
 			game_manager.transitioning = false
 			
 	elif (eating and current_scene < 3 and is_on_floor()) or (dead and current_scene < 3):
@@ -330,6 +334,7 @@ func _on_eating_timer_timeout():
 		speed = scene_data[current_scene]["speed"]
 		jump_velocity = scene_data[current_scene]["jump_velocity"]
 		growing_sound.play()
+		rumble(current_scene/6., current_scene/6., 0)
 		transitioning = true
 		game_manager.transitioning = true
 		transition_metadata["y_position"] = scene_data[current_scene]["target_player_y_position"]

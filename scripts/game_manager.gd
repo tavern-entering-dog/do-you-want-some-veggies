@@ -25,6 +25,7 @@ enum Languages {
 @export var language: Languages
 
 @export var game_started = false
+@export var dead = false
 
 var handlers = []
 var timers = []
@@ -43,7 +44,7 @@ func get_scene_from_number(number):
 			return scene_5
 
 func _process(delta):
-	if Input.is_action_just_pressed("pause"):
+	if Input.is_action_just_pressed("pause") and game_started and not dead:
 		pause_text.text = 'Juego Pausado' if language == Languages.Spanish else 'Game Paused'
 		match get_tree().paused:
 			true:

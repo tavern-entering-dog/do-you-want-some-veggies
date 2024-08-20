@@ -12,7 +12,6 @@
 [node name="Scene 1 Song" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_ewnrm")
 volume_db = -80.0
-autoplay = true
 max_distance = 1e+06
 
 [node name="Scene 2 Song" type="AudioStreamPlayer2D" parent="."]

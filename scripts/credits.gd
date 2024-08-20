@@ -42,7 +42,7 @@ var credits = [
 		"Programming and Art",
 		"Henry Díaz Bordón",
 	],[
-		"Works Cited",
+		"Assets Employed",
 		"'4 Chiptunes (Adventure)' by SubspaceAudio",
 		"https://opengameart.org/content/4-chiptunes-adventure",
 		"",
@@ -170,9 +170,9 @@ func add_line():
 
 
 func _unhandled_input(event):
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("pause"):
 		finish()
-	if event.is_action_pressed("ui_down") and !event.is_echo():
+	if event.is_action_pressed("jump") and !event.is_echo():
 		speed_up = true
-	if event.is_action_released("ui_down") and !event.is_echo():
+	if event.is_action_pressed("descend") and !event.is_echo():
 		speed_up = false

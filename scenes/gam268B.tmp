@@ -669,7 +669,6 @@ death_phrases = {
 "english": ["Not bad for a skinny little guy...", "C'mon, even my granny can do better than that!", "I've seen girls who eat more than you, just saying", "\"Mom was right, I needed that extra sugar\"", "\"Can't wait to poop all this food\"", "Are you still hungry buddy?", "* But your soul refused to die      -- Nah, just kidding", "Don't you feel kinda hungry after all this?", "ඞ", "Press any key to restart"],
 "spanish": ["No está mal para un tipo flacucho y enclenque...", "¡Vamos, joder! Hasta mi abuela puede con eso", "Solo digo que he visto a niñitas comer más", "\"Mami tenía razón, necesitaba ese azúcar extra\"", "\"Me muero de ganas de cagar todo esto\"", "¿Todavía quieres comer amiguito?", "* Pero tu alma se negó a morir      -- Nah, es coña", "¿No te da ganas de comer jugar a este juego?", "ඞ", "Presiona cualquier botón para volver a empezar"]
 }
-debug = false
 
 [node name="Game Manager" type="Node" parent="."]
 process_mode = 3
@@ -873,6 +872,9 @@ root_node = NodePath("../../..")
 libraries = {
 "": SubResource("AnimationLibrary_4uq8b")
 }
+
+[node name="Move Animation Timer" type="Timer" parent="Title"]
+one_shot = true
 
 [node name="Background" type="Node" parent="."]
 
@@ -1079,6 +1081,7 @@ shape = SubResource("WorldBoundaryShape2D_0o4m0")
 
 [connection signal="game_start" from="Title" to="." method="_on_title_game_start"]
 [connection signal="pressed" from="Title/Language Button" to="." method="_on_language_button_pressed"]
+[connection signal="timeout" from="Title/Move Animation Timer" to="Title" method="_on_move_animation_timer_timeout"]
 [connection signal="death" from="Player" to="." method="_on_player_death"]
 [connection signal="next_scene" from="Player" to="." method="_on_player_next_scene"]
 [connection signal="next_scene" from="Player" to="Game Manager" method="_on_player_next_scene"]
