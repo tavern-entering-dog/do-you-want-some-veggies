@@ -62,7 +62,10 @@ var credits = [
 		"https://godotshaders.com/shader/realistic-crt-shader/",
 		"",
 		"'JinxedWizards' by Christina Antoinette Neofotistou",
-		"https://www.pentacom.jp/pentacom/bitfontmaker2/gallery/?id=1362"
+		"https://www.pentacom.jp/pentacom/bitfontmaker2/gallery/?id=1362",
+		"",
+		"'Credits Screen' by MiDe",
+		"https://godotengine.org/asset-library/asset/2411"
 	],[
 		"Tools Used",
 		"Developed with Godot Engine v4.3",
