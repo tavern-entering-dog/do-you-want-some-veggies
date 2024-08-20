@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://rmt6echarx1v"]
+
+[ext_resource type="Script" path="res://scripts/credits.gd" id="1_apuyh"]
+[ext_resource type="FontFile" uid="uid://p4jquj05bc75" path="res://assets/fonts/doggobark-serif.ttf" id="2_lqhw4"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_apuyh")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.0509804, 0.0509804, 0.0509804, 1)
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+expand = true
+
+[node name="CreditsContainer" type="Control" parent="."]
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Line" type="Label" parent="CreditsContainer"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 625.0
+offset_bottom = 648.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_lqhw4")
+text = "tavern-entering dog Studios© 2024"
+horizontal_alignment = 1

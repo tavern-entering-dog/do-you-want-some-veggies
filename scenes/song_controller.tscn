@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://cmakhq2oah12p"]
+
+[node name="Song Controller" type="Node"]
+metadata/restart_song = false

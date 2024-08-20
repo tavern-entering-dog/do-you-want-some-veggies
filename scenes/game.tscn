@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=3 uid="uid://15c2udrya53f"]
+[gd_scene load_steps=104 format=3 uid="uid://15c2udrya53f"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_7yfrf"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_hjhhc"]
@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://87v15juaymtl" path="res://assets/sprites/player_icon_perfect.png" id="4_3xseo"]
 [ext_resource type="Texture2D" uid="uid://dbbttbp5yh30t" path="res://assets/sprites/title_background.png" id="4_j57ky"]
 [ext_resource type="FontFile" uid="uid://dy15p7qros583" path="res://assets/fonts/JinxedWizards.ttf" id="4_t3ooc"]
+[ext_resource type="PackedScene" uid="uid://br3loduuk5lhm" path="res://scenes/enemies/helicopter.tscn" id="4_tjk1l"]
+[ext_resource type="PackedScene" uid="uid://csi8pe1rwkyca" path="res://scenes/enemies/math_bullet.tscn" id="6_1btwa"]
+[ext_resource type="PackedScene" uid="uid://wbfwhcrwjcli" path="res://scenes/enemies/missile.tscn" id="6_8btnm"]
 [ext_resource type="PackedScene" uid="uid://brcs0q1bm23ks" path="res://scenes/player.tscn" id="6_dtkok"]
 [ext_resource type="PackedScene" uid="uid://deivs6akoc4un" path="res://scenes/edible.tscn" id="7_tniya"]
 [ext_resource type="Texture2D" uid="uid://d4lroi0xapcwx" path="res://assets/sprites/scene_1.png" id="10_lf8rj"]
@@ -31,6 +34,8 @@
 [ext_resource type="Texture2D" uid="uid://bfty4qwwh8q1j" path="res://assets/sprites/scene_4.png" id="20_ejg8n"]
 [ext_resource type="Texture2D" uid="uid://v70x0qvurjxp" path="res://assets/sprites/alien.png" id="21_7c51t"]
 [ext_resource type="PackedScene" uid="uid://c6kxwp8eac0o2" path="res://scenes/music.tscn" id="29_2gned"]
+[ext_resource type="PackedScene" uid="uid://btla1wfekjsed" path="res://scenes/enemies/asteroid.tscn" id="33_aw1ge"]
+[ext_resource type="PackedScene" uid="uid://cuuilqw6cn71y" path="res://scenes/enemies/human.tscn" id="36_vwrxx"]
 
 [sub_resource type="Animation" id="Animation_gxvk8"]
 length = 0.001
@@ -186,6 +191,60 @@ shader_parameter/dimensions = Vector2(1152, 648)
 shader_parameter/amplitude = Vector2(100, 125)
 shader_parameter/frequency = Vector2(3.14159, 1.5708)
 shader_parameter/shift = Vector2(1, 1.5)
+
+[sub_resource type="Animation" id="Animation_pg3iy"]
+resource_name = "pause_text_move"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Camera2D/Pause Stuff/Pause Text:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(365, -100), Vector2(365, 294)]
+}
+
+[sub_resource type="Animation" id="Animation_j242l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Camera2D/Pause Stuff/Pause Text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(365, -100)]
+}
+
+[sub_resource type="Animation" id="Animation_7ujec"]
+resource_name = "move_back"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Camera2D/Pause Stuff/Pause Text:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(365, 294), Vector2(365, -100)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uhat3"]
+_data = {
+"RESET": SubResource("Animation_j242l"),
+"move_back": SubResource("Animation_7ujec"),
+"pause_text_move": SubResource("Animation_pg3iy")
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dm15y"]
 atlas = ExtResource("2_i06m3")
@@ -612,9 +671,10 @@ death_phrases = {
 }
 
 [node name="Game Manager" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("2_hjhhc")
-scene_spawn_probability = [0.0, 0.0, 0.005, 0.0, 0.0]
-enemy_list = [null, null, ExtResource("3_fmr6d")]
+scene_spawn_time = [[], [Vector2(4, 5), Vector2(5, 6), Vector2(4.5, 7)], [Vector2(2.5, 3.3), Vector2(10, 10), Vector2(4.5, 5.5), Vector2(3.3, 4.5)], [Vector2(2, 3), Vector2(2.5, 3.5), Vector2(7.5, 10)], [Vector2(1.5, 2.5), Vector2(2, 3), Vector2(2.5, 3.5)]]
+enemy_list = [[], [ExtResource("36_vwrxx"), ExtResource("36_vwrxx"), ExtResource("36_vwrxx")], [ExtResource("4_tjk1l"), ExtResource("4_tjk1l"), ExtResource("3_fmr6d"), ExtResource("3_fmr6d")], [ExtResource("33_aw1ge"), ExtResource("33_aw1ge"), ExtResource("6_8btnm")], [ExtResource("6_1btwa"), ExtResource("6_1btwa"), ExtResource("6_1btwa")]]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -10500)
@@ -629,10 +689,10 @@ anchors_preset = -1
 anchor_right = 0.136285
 offset_left = 100.0
 offset_top = -144.0
-offset_right = 2310.0
+offset_right = 5764.01
 offset_bottom = -63.0
 scale = Vector2(1.5, 1.5)
-max_value = 1000.0
+max_value = 1250.0
 texture_progress = ExtResource("2_iq6k3")
 metadata/_edit_use_anchors_ = true
 
@@ -651,7 +711,7 @@ anchor_bottom = 1.0
 offset_left = 300.0
 offset_top = 673.0
 offset_right = 640.0
-offset_bottom = 33073.0
+offset_bottom = 47329.0
 grow_horizontal = 2
 grow_vertical = 2
 auto_translate = false
@@ -683,7 +743,7 @@ anchor_bottom = 1.0
 offset_left = 242.0
 offset_top = -100.0
 offset_right = 910.0
-offset_bottom = 32300.0
+offset_bottom = 46556.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.4, 0, 0, 1)
@@ -706,7 +766,7 @@ anchor_bottom = 1.0
 offset_left = 175.0
 offset_top = 700.0
 offset_right = 515.0
-offset_bottom = 33100.0
+offset_bottom = 47356.0
 grow_horizontal = 2
 grow_vertical = 2
 auto_translate = false
@@ -736,6 +796,41 @@ offset_left = -576.0
 offset_top = -324.0
 offset_right = 1728.0
 offset_bottom = 972.0
+
+[node name="Pause Stuff" type="CanvasLayer" parent="Camera2D"]
+process_mode = 3
+layer = 0
+
+[node name="Pause Text" type="Label" parent="Camera2D/Pause Stuff"]
+process_mode = 2
+z_index = 2
+material = SubResource("ShaderMaterial_r742t")
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 365.0
+offset_top = -100.0
+offset_right = 753.0
+offset_bottom = 46556.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.411765, 0.741176, 0.184314, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("4_t3ooc")
+theme_override_font_sizes/font_size = 64
+text = "Game Paused"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/Pause Stuff"]
+root_node = NodePath("../../../Game Manager")
+libraries = {
+"": SubResource("AnimationLibrary_uhat3")
+}
 
 [node name="Title" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -777,6 +872,9 @@ root_node = NodePath("../../..")
 libraries = {
 "": SubResource("AnimationLibrary_4uq8b")
 }
+
+[node name="Move Animation Timer" type="Timer" parent="Title"]
+one_shot = true
 
 [node name="Background" type="Node" parent="."]
 
@@ -983,5 +1081,7 @@ shape = SubResource("WorldBoundaryShape2D_0o4m0")
 
 [connection signal="game_start" from="Title" to="." method="_on_title_game_start"]
 [connection signal="pressed" from="Title/Language Button" to="." method="_on_language_button_pressed"]
+[connection signal="timeout" from="Title/Move Animation Timer" to="Title" method="_on_move_animation_timer_timeout"]
 [connection signal="death" from="Player" to="." method="_on_player_death"]
 [connection signal="next_scene" from="Player" to="." method="_on_player_next_scene"]
+[connection signal="next_scene" from="Player" to="Game Manager" method="_on_player_next_scene"]

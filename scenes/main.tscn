@@ -1,0 +1,90 @@
+[gd_scene load_steps=7 format=3 uid="uid://csck83o13a5ou"]
+
+[ext_resource type="Texture2D" uid="uid://c8m6gil22xm5c" path="res://assets/sprites/banner.png" id="1_b01rh"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_yg301"]
+[ext_resource type="AudioStream" uid="uid://6rgyq00fmwyj" path="res://assets/sfx/intro.wav" id="5_oprjh"]
+
+[sub_resource type="Animation" id="Animation_fbdu1"]
+resource_name = "game_start"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Banner:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Intro Sound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_tigpj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Banner:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Intro Sound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2kdsi"]
+_data = {
+"RESET": SubResource("Animation_tigpj"),
+"game_start": SubResource("Animation_fbdu1")
+}
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_yg301")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2kdsi")
+}
+autoplay = "game_start"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.0509804, 0.0509804, 0.0509804, 1)
+
+[node name="Banner" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(576, 324)
+texture = ExtResource("1_b01rh")
+
+[node name="Intro Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_oprjh")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -40,6 +40,7 @@ var uk_flag = null
 @onready var scene_3_sound = $"Music/Scene 3 Sound"
 @onready var scene_4_music = $"Music/Scene 4 Song"
 @onready var scene_5_music = $"Music/Scene 5 Song"
+@onready var scene_6_music = $"Music/Scene 6 Song"
 
 @onready var language_manager = $"/root/LanguageManager"
 
@@ -77,6 +78,8 @@ func scene_song(scene_number: int):
 			return scene_4_music
 		4:
 			return scene_5_music
+		5:
+			return scene_6_music
 
 func _ready():
 	scene_1_music.volume_db = 0
@@ -118,10 +121,12 @@ func toggle_language():
 		language = Languages.Spanish
 		language_button.icon = spanish_flag
 		language_manager.set_meta("english", false)
+		game_manager.language = Languages.Spanish
 	elif language == Languages.Spanish:
 		language = Languages.English
 		language_button.icon = uk_flag
 		language_manager.set_meta("english", true)
+		game_manager.language = Languages.English
 
 func _on_language_button_pressed():
 	toggle_language()
@@ -169,6 +174,9 @@ func _process(delta):
 			toggle_language()
 
 	if transitioning:
+		if player.scale.y >= 20:
+			get_tree().change_scene_to_file("res://scenes/credits.tscn")
+
 		camera_2d.zoom = camera_2d.zoom.lerp(transition_metadata["zoom"], transition_speed*delta)
 		camera_2d.position = camera_2d.position.lerp(transition_metadata["position"], transition_speed*delta)
 

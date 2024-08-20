@@ -1,0 +1,99 @@
+[gd_scene load_steps=13 format=3 uid="uid://wbfwhcrwjcli"]
+
+[ext_resource type="Script" path="res://scripts/enemies/missile.gd" id="1_17y0y"]
+[ext_resource type="Texture2D" uid="uid://xh45rnujs8m3" path="res://assets/sprites/missile.png" id="11_a4q7f"]
+[ext_resource type="Texture2D" uid="uid://d365e1v7vwoji" path="res://assets/sprites/explosion.png" id="12_6qwr4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3y2b"]
+atlas = ExtResource("11_a4q7f")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rufw1"]
+atlas = ExtResource("11_a4q7f")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6efas"]
+atlas = ExtResource("11_a4q7f")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjf74"]
+atlas = ExtResource("12_6qwr4")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efuln"]
+atlas = ExtResource("12_6qwr4")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xkte"]
+atlas = ExtResource("12_6qwr4")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rlqat"]
+atlas = ExtResource("12_6qwr4")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qj55t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3y2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rufw1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6efas")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xjf74")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efuln")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xkte")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rlqat")
+}],
+"loop": true,
+"name": &"explosion",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3pjg7"]
+size = Vector2(47.7, 14.2)
+
+[node name="Missile" type="Area2D"]
+scale = Vector2(40, 40)
+script = ExtResource("1_17y0y")
+speed_limits = [2000.0, 3500.0]
+metadata/edible = true
+metadata/nutrients = 5
+metadata/grabbed = false
+metadata/is_initialized = false
+metadata/damage = 75
+metadata/player_position = Vector2(0, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 1.5708
+sprite_frames = SubResource("SpriteFrames_qj55t")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4.85, 0)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_3pjg7")
+metadata/edible = true
+metadata/nutrients = 25
+
+[node name="Dying Animation Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="Dying Animation Timer" to="." method="_on_dying_animation_timer_timeout"]

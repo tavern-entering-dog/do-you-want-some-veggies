@@ -1,15 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://c6kxwp8eac0o2"]
+[gd_scene load_steps=7 format=3 uid="uid://c6kxwp8eac0o2"]
 
 [ext_resource type="AudioStream" uid="uid://ssoowhobpd38" path="res://assets/music/scene_1.wav" id="1_ewnrm"]
 [ext_resource type="AudioStream" uid="uid://cyryxx48resns" path="res://assets/music/scene_2.wav" id="2_criew"]
 [ext_resource type="AudioStream" uid="uid://drgcv25bvlfes" path="res://assets/music/scene_3.wav" id="3_i6ut8"]
 [ext_resource type="AudioStream" uid="uid://cfq6xq1wueogw" path="res://assets/music/scene_5.wav" id="3_pidwt"]
 [ext_resource type="AudioStream" uid="uid://k4wdbeaupumm" path="res://assets/music/scene_4.wav" id="4_jli7m"]
+[ext_resource type="AudioStream" uid="uid://dfrlma1djx8b0" path="res://assets/music/credits.wav" id="6_745uq"]
 
 [node name="Music" type="Node"]
 
 [node name="Scene 1 Song" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_ewnrm")
+volume_db = -80.0
 autoplay = true
 max_distance = 1e+06
 
@@ -35,3 +37,11 @@ max_distance = 1e+06
 stream = ExtResource("3_pidwt")
 volume_db = -80.0
 max_distance = 1e+06
+
+[node name="Scene 6 Song" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_745uq")
+volume_db = -80.0
+max_distance = 1e+06
+
+[node name="Credits Song" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_745uq")

@@ -1,0 +1,36 @@
+[gd_scene load_steps=12 format=3 uid="uid://btla1wfekjsed"]
+
+[ext_resource type="Script" path="res://scripts/enemies/asteroid.gd" id="1_cexvj"]
+[ext_resource type="Texture2D" uid="uid://vtt466vhs7qi" path="res://assets/sprites/asteroid_0001.png" id="2_iw34v"]
+[ext_resource type="Texture2D" uid="uid://cpx3t21ejql0b" path="res://assets/sprites/asteroid_0002.png" id="3_lcq0h"]
+[ext_resource type="Texture2D" uid="uid://cvvgsfkrhx6v0" path="res://assets/sprites/asteroid_0003.png" id="4_1q2wn"]
+[ext_resource type="Texture2D" uid="uid://depcjyr5cnvdg" path="res://assets/sprites/asteroid_0004.png" id="5_invlq"]
+[ext_resource type="Texture2D" uid="uid://craptu4d0w4fi" path="res://assets/sprites/asteroid_0005.png" id="6_afls4"]
+[ext_resource type="Texture2D" uid="uid://cnjedphvr3a8m" path="res://assets/sprites/asteroid_0006.png" id="7_660u1"]
+[ext_resource type="Texture2D" uid="uid://ljiwp8aw0egt" path="res://assets/sprites/asteroid_0007.png" id="8_4o70s"]
+[ext_resource type="Texture2D" uid="uid://bo70ql6h322rp" path="res://assets/sprites/asteroid_0008.png" id="9_k02fp"]
+[ext_resource type="Texture2D" uid="uid://d0pq1i4n17881" path="res://assets/sprites/comet.png" id="10_v0qcp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6y4a3"]
+radius = 21.1283
+
+[node name="Asteroid" type="Area2D"]
+scale = Vector2(40, 40)
+script = ExtResource("1_cexvj")
+possible_textures = [ExtResource("10_v0qcp"), [ExtResource("2_iw34v"), ExtResource("3_lcq0h"), ExtResource("4_1q2wn"), ExtResource("5_invlq"), ExtResource("6_afls4"), ExtResource("7_660u1"), ExtResource("8_4o70s"), ExtResource("9_k02fp")], [ExtResource("2_iw34v"), ExtResource("3_lcq0h"), ExtResource("4_1q2wn"), ExtResource("5_invlq"), ExtResource("6_afls4"), ExtResource("7_660u1"), ExtResource("8_4o70s"), ExtResource("9_k02fp")], [ExtResource("2_iw34v"), ExtResource("3_lcq0h"), ExtResource("4_1q2wn"), ExtResource("5_invlq"), ExtResource("6_afls4"), ExtResource("7_660u1"), ExtResource("8_4o70s"), ExtResource("9_k02fp")]]
+speed_limits = [3500.0, 6000.0]
+metadata/edible = true
+metadata/nutrients = 30
+metadata/grabbed = false
+metadata/is_initialized = false
+metadata/damage = 50
+metadata/player_position = Vector2(0, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = -0.698132
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6y4a3")
+metadata/edible = true
+metadata/nutrients = 25

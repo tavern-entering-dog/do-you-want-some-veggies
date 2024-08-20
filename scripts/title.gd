@@ -7,6 +7,8 @@ signal game_start
 @onready var title_background = $"Title Background"
 @onready var language_button = $"Language Button"
 @onready var title = $"."
+@onready var move_animation_timer = $"Move Animation Timer"
+@onready var game_manager = $"../Game Manager"
 
 @export var title_movement_velocity = 1
 @export var title_movement_height = 1
@@ -53,3 +55,7 @@ func _input(event):
 		language_button.disabled = true
 		language_button.get_child(0).play('move')
 		title_screen = false
+		move_animation_timer.start()
+
+func _on_move_animation_timer_timeout():
+	game_manager.game_started = true

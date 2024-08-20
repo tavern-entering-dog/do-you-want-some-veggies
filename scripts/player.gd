@@ -122,7 +122,7 @@ var time_start = 0
 	},
 	{
 		"metabolism_speed": 50,
-		"max_hunger": 1000,
+		"max_hunger": 1250,
 		"target_player_size": 17,
 		"target_player_y_position": -9000,
 		"camera_zoom": 0.07,
@@ -133,7 +133,24 @@ var time_start = 0
 			Vector2(0, -6300),
 			Vector2(0, -14500)
 		],
-		"height": "ω",
+		"height": "∞",
+		"jump_velocity": -5500.0,
+		"speed": 3750.0
+	},
+	{
+		"metabolism_speed": 50,
+		"max_hunger": 1250,
+		"target_player_size": 25,
+		"target_player_y_position": -9000,
+		"camera_zoom": 0.1,
+		"camera_coordinates": Vector2(0, -10500),
+		"border_coordinates": [
+			Vector2(-7000, 0),
+			Vector2(7000, 0),
+			Vector2(0, -6300),
+			Vector2(0, -14500)
+		],
+		"height": "∞",
 		"jump_velocity": -5500.0,
 		"speed": 3750.0
 	},
@@ -234,6 +251,8 @@ func _physics_process(delta):
 		else:
 			hurt_sound.play()
 			dead = true
+			eating = false
+			Engine.time_scale = 1
 			animation_player.stop()
 			animated_sprite_2d.play("die")
 			animation_player.play("arms_dying")
@@ -248,10 +267,13 @@ func _physics_process(delta):
 		), transition_speed*delta)
 		var _size = transition_metadata["size"]
 		scale = scale.lerp(Vector2(_size, _size), transition_speed*delta)
+		left_arm.player_size = scale.y
+		right_arm.player_size = scale.y
 		if (abs(position.y - transition_metadata["y_position"]) < abs(transition_metadata["y_position"]/100.))\
 		and (abs(scale.x - transition_metadata["size"]) < abs(transition_metadata["size"]/100.)):
 			transitioning = false
 			game_manager.transitioning = false
+			
 	elif (eating and current_scene < 3 and is_on_floor()) or (dead and current_scene < 3):
 		velocity.x = 0
 
@@ -272,17 +294,18 @@ func eat(area):
 	if area.has_meta("nutrients"):
 		hunger += area.get_meta("nutrients")
 	eating = true
+	left_arm.eating = true
+	right_arm.eating = true
 	animated_sprite_2d.play("eating")
 	eating_sound.play()
-	Engine.time_scale = 0.5
+	Engine.time_scale = 0.75
 	eating_timer.start()
 
 func _on_head_area_entered(area):
 	if area == $"Collision Detection Area":
 		return
 	if area.has_meta("edible") and area.get_meta("edible"):
-		eat(area)
-		area.queue_free()
+		return
 	else:
 		for child in area.get_child(2).get_children():
 			if child.has_meta("edible") and child.get_meta("edible"):
@@ -292,6 +315,8 @@ func _on_head_area_entered(area):
 func _on_eating_timer_timeout():
 	eating_particles.emitting = true
 	eating = false
+	left_arm.eating = false
+	right_arm.eating = false
 	Engine.time_scale = 1
 	if hunger >= scene_data[current_scene]["max_hunger"]:
 		current_scene += 1
@@ -323,7 +348,7 @@ func _on_revive_timer_timeout():
 	can_restart = true
 
 func _on_collision_detection_area_area_entered(area):
-	if dead or transitioning or eating:
+	if dead or transitioning:
 		return
 	if area.get_parent().name == 'Hand':
 		return

@@ -11,15 +11,15 @@ size = Vector2(124, 62)
 
 [node name="Vehicle" type="Area2D"]
 z_index = -4
-scale = Vector2(15, 15)
+scale = Vector2(12, 12)
 script = ExtResource("1_wclgt")
 possible_textures = [ExtResource("2_su8c3"), ExtResource("3_54mxr"), ExtResource("4_2eleo"), ExtResource("5_di43b")]
 speed_limits = [1000.0, 1500.0]
 metadata/edible = true
-metadata/nutrients = 25
+metadata/nutrients = 10
 metadata/grabbed = false
 metadata/is_initialized = false
-metadata/damage = 10
+metadata/damage = 20
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("5_di43b")

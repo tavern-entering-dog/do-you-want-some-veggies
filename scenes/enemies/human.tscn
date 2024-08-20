@@ -1,0 +1,35 @@
+[gd_scene load_steps=11 format=3 uid="uid://cuuilqw6cn71y"]
+
+[ext_resource type="Script" path="res://scripts/enemies/human.gd" id="1_sohp4"]
+[ext_resource type="Texture2D" uid="uid://dd3l2nhycjvqa" path="res://assets/sprites/survivor_1_0001.png" id="2_cbho4"]
+[ext_resource type="Texture2D" uid="uid://ftaaxqekrdqp" path="res://assets/sprites/survivor_1_0002.png" id="3_pcsvq"]
+[ext_resource type="Texture2D" uid="uid://bshvmdcx1pk8" path="res://assets/sprites/survivor_2_0001.png" id="4_iev7l"]
+[ext_resource type="Texture2D" uid="uid://ijrknhv1jr78" path="res://assets/sprites/survivor_2_0002.png" id="5_6lrll"]
+[ext_resource type="Texture2D" uid="uid://bsd8wmoxcsho7" path="res://assets/sprites/survivor_3_0001.png" id="6_4knni"]
+[ext_resource type="Texture2D" uid="uid://b6qq4svfjxr2" path="res://assets/sprites/survivor_3_0002.png" id="7_xwxup"]
+[ext_resource type="Texture2D" uid="uid://t7wi08jcku6u" path="res://assets/sprites/survivor_4_0001.png" id="8_5nj5k"]
+[ext_resource type="Texture2D" uid="uid://630ob7agu7d6" path="res://assets/sprites/survivor_4_0002.png" id="9_6yc57"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bafsd"]
+size = Vector2(22, 56.4)
+
+[node name="Human" type="Area2D"]
+z_index = -1
+scale = Vector2(5, 5)
+script = ExtResource("1_sohp4")
+possible_textures = [[ExtResource("2_cbho4"), ExtResource("3_pcsvq")], [ExtResource("4_iev7l"), ExtResource("5_6lrll")], [ExtResource("6_4knni"), ExtResource("7_xwxup")], [ExtResource("8_5nj5k"), ExtResource("9_6yc57")]]
+speed_limits = [400.0, 800.0]
+metadata/edible = true
+metadata/nutrients = 25
+metadata/grabbed = false
+metadata/is_initialized = false
+metadata/damage = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_bafsd")
+metadata/edible = true
+metadata/nutrients = 25
