@@ -16,27 +16,22 @@ max_distance = 1e+06
 [node name="Scene 2 Song" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_criew")
 volume_db = -80.0
-autoplay = true
 max_distance = 1e+06
 
 [node name="Scene 3 Song" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_i6ut8")
 volume_db = -80.0
-autoplay = true
 max_distance = 1e+06
 
 [node name="Scene 3 Sound" type="AudioStreamPlayer2D" parent="."]
 volume_db = -80.0
-autoplay = true
 max_distance = 1e+06
 
 [node name="Scene 4 Song" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_jli7m")
-autoplay = true
 max_distance = 1e+06
 
 [node name="Scene 5 Song" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_pidwt")
 volume_db = -80.0
-autoplay = true
 max_distance = 1e+06

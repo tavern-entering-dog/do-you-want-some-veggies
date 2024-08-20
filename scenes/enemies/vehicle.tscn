@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://2hbi76fyekee"]
+
+[ext_resource type="Script" path="res://scripts/enemies/vehicle.gd" id="1_wclgt"]
+[ext_resource type="Texture2D" uid="uid://dk5fe7qhgulh3" path="res://assets/sprites/car_1.png" id="2_su8c3"]
+[ext_resource type="Texture2D" uid="uid://bgqch1wawbfo1" path="res://assets/sprites/car_2.png" id="3_54mxr"]
+[ext_resource type="Texture2D" uid="uid://d0xmksaxce4ug" path="res://assets/sprites/truck_1.png" id="4_2eleo"]
+[ext_resource type="Texture2D" uid="uid://i7gr4vh58vns" path="res://assets/sprites/truck_2.png" id="5_di43b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bafsd"]
+size = Vector2(124, 62)
+
+[node name="Vehicle" type="Area2D"]
+z_index = -4
+scale = Vector2(15, 15)
+script = ExtResource("1_wclgt")
+possible_textures = [ExtResource("2_su8c3"), ExtResource("3_54mxr"), ExtResource("4_2eleo"), ExtResource("5_di43b")]
+speed_limits = [1000.0, 1500.0]
+metadata/edible = true
+metadata/nutrients = 25
+metadata/grabbed = false
+metadata/is_initialized = false
+metadata/damage = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("5_di43b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bafsd")
+metadata/edible = true
+metadata/nutrients = 25

@@ -9,6 +9,8 @@ enum Languages {
 var spanish_flag = null
 var uk_flag = null
 
+@onready var game_manager = $"Game Manager"
+
 @onready var language_button = $"Title/Language Button"
 @onready var player = $Player
 @onready var camera_2d = $Camera2D
@@ -224,12 +226,14 @@ func _on_player_next_scene(
 	height,
 	max_hunger
 ):
+	game_manager.scene_number = number
 	left_boundary.position = border_coordinates[0]
 	right_boundary.position = border_coordinates[1]
 	bottom_boundary.position = border_coordinates[2]
 	top_boundary.position = border_coordinates[3]
 	height_text.text = ("Height: " + height if language == Languages.English
 						else "Altura: " + height)
+	scene_song(number).playing = true
 
 	if number == 2:
 		roof_animation.play("appear")

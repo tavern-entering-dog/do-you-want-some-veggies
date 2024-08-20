@@ -20,8 +20,11 @@ func _on_area_entered(area):
 	or len(hand.get_children()) != 0:
 		return
 	if area.has_meta('edible'):
+		var previous_scale = area.scale
 		var new_child = area.duplicate()
-		new_child.scale = Vector2(.8, .8)
+		new_child.scale = Vector2(0.8, 0.8)
 		new_child.position = Vector2(0, 0)
+		new_child.z_index = 0
+		new_child.set_meta("grabbed", true)
 		hand.call_deferred("add_child", new_child)
 		area.queue_free()

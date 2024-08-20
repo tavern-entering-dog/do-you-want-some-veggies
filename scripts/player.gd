@@ -27,6 +27,8 @@ signal next_scene(
 @onready var propulsion_sound = $"SFX/Propulsion Sound"
 @onready var growing_sound = $"SFX/Growing Sound"
 
+@onready var game_manager = $"../Game Manager"
+
 var left_arm_position = Vector2(0, 0)
 var right_arm_position = Vector2(0, 0)
 
@@ -63,12 +65,12 @@ var time_start = 0
 			Vector2(0, 253),
 			Vector2(0, -325)
 		],
-		"height": "1m 83cm",
+		"height": "1m 62cm",
 		"jump_velocity": jump_velocity,
 		"speed": speed
 	},
 	{
-		"metabolism_speed": 5,
+		"metabolism_speed": 10,
 		"max_hunger": 250,
 		"target_player_size": 3,
 		"target_player_y_position": -290,
@@ -85,7 +87,7 @@ var time_start = 0
 		"speed": 600.0
 	},
 	{
-		"metabolism_speed": 10,
+		"metabolism_speed": 25,
 		"max_hunger": 550,
 		"target_player_size": 12,
 		"target_player_y_position": -1750,
@@ -102,7 +104,7 @@ var time_start = 0
 		"speed": 1000.0
 	},
 	{
-		"metabolism_speed": 20,
+		"metabolism_speed": 35,
 		"max_hunger": 750,
 		"target_player_size": 15,
 		"target_player_y_position": -7750,
@@ -119,7 +121,7 @@ var time_start = 0
 		"speed": 4000.0
 	},
 	{
-		"metabolism_speed": 35,
+		"metabolism_speed": 50,
 		"max_hunger": 1000,
 		"target_player_size": 17,
 		"target_player_y_position": -9000,
@@ -159,7 +161,8 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("debug_eat"):
 			hunger += 25
 			eating = true
-			animated_sprite_2d.play("eating")
+			if not animated_sprite_2d.animation == 'hurt':
+				animated_sprite_2d.play("eating")
 			Engine.time_scale = 0.5
 			eating_timer.start()
 
@@ -183,7 +186,8 @@ func _physics_process(delta):
 			animated_sprite_2d.flip_h = false
 			left_arm.position = left_arm_position
 			right_arm.position = right_arm_position
-			animated_sprite_2d.play("idle")
+			if not animated_sprite_2d.animation == 'hurt':
+				animated_sprite_2d.play("idle")
 			if not animation_player.is_playing():
 				animation_player.play("arms_idle", -1, 1, true)
 			if current_scene < 3:
@@ -247,6 +251,7 @@ func _physics_process(delta):
 		if (abs(position.y - transition_metadata["y_position"]) < abs(transition_metadata["y_position"]/100.))\
 		and (abs(scale.x - transition_metadata["size"]) < abs(transition_metadata["size"]/100.)):
 			transitioning = false
+			game_manager.transitioning = false
 	elif (eating and current_scene < 3 and is_on_floor()) or (dead and current_scene < 3):
 		velocity.x = 0
 
@@ -273,6 +278,8 @@ func eat(area):
 	eating_timer.start()
 
 func _on_head_area_entered(area):
+	if area == $"Collision Detection Area":
+		return
 	if area.has_meta("edible") and area.get_meta("edible"):
 		eat(area)
 		area.queue_free()
@@ -299,6 +306,7 @@ func _on_eating_timer_timeout():
 		jump_velocity = scene_data[current_scene]["jump_velocity"]
 		growing_sound.play()
 		transitioning = true
+		game_manager.transitioning = true
 		transition_metadata["y_position"] = scene_data[current_scene]["target_player_y_position"]
 		transition_metadata["size"] = scene_data[current_scene]["target_player_size"]
 		gravity *= transition_metadata["size"]
@@ -313,3 +321,19 @@ func _on_death_timer_timeout():
 
 func _on_revive_timer_timeout():
 	can_restart = true
+
+func _on_collision_detection_area_area_entered(area):
+	if dead or transitioning or eating:
+		return
+	if area.get_parent().name == 'Hand':
+		return
+	var subtracted_hunger = area.get_meta("damage", 0)
+	if subtracted_hunger == 0:
+		return
+	hunger -= subtracted_hunger
+	animated_sprite_2d.play("hurt")
+	hurt_sound.play()
+
+func _on_collision_detection_area_area_exited(area):
+	if dead or transitioning or eating:
+		return
