@@ -52,7 +52,6 @@ func _input(event):
 	or Input.is_action_just_pressed("right_click"))\
 	and not (Input.is_action_pressed("change_lang"))\
 	and not (Input.is_action_pressed("toggle_fullscreen"))\
-	and not (Input.is_action_pressed("pause"))\
 	and time_elapsed > 1:
 		title_text.get_child(0).play('move')
 		language_button.disabled = true
