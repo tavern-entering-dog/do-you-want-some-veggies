@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=3 uid="uid://15c2udrya53f"]
+[gd_scene load_steps=107 format=3 uid="uid://15c2udrya53f"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_7yfrf"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_hjhhc"]
@@ -22,9 +22,12 @@
 [ext_resource type="Texture2D" uid="uid://ckxq1q1d8i47w" path="res://assets/sprites/ham.png" id="12_54map"]
 [ext_resource type="Texture2D" uid="uid://s7bnntcu3o6b" path="res://assets/sprites/salad.png" id="13_620j0"]
 [ext_resource type="Texture2D" uid="uid://dbyopp5he4ons" path="res://assets/sprites/beer.png" id="14_673og"]
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_mbcoa"]
 [ext_resource type="Texture2D" uid="uid://db1aa7vk4vna" path="res://assets/sprites/scene_3.png" id="15_qjddm"]
 [ext_resource type="Shader" path="res://shaders/xor.gdshader" id="15_rtsj1"]
+[ext_resource type="Texture2D" uid="uid://dnaqds673vkoj" path="res://assets/sprites/movement_mobile_controls_0001.png" id="15_sfxw0"]
 [ext_resource type="Texture2D" uid="uid://ddrjm6nvkgmss" path="res://assets/sprites/scene_2.png" id="15_ti44v"]
+[ext_resource type="Texture2D" uid="uid://c2dolgp0u5rp6" path="res://assets/sprites/movement_mobile_controls_0002.png" id="16_auik8"]
 [ext_resource type="Texture2D" uid="uid://1m5owtv5avhs" path="res://assets/sprites/scene_3_house_roof.png" id="16_nmwgb"]
 [ext_resource type="Script" path="res://scripts/scene_3_parallax.gd" id="17_5j8mc"]
 [ext_resource type="Texture2D" uid="uid://c1ng5crbym4j8" path="res://assets/sprites/wood.png" id="17_8ydcc"]
@@ -788,6 +791,53 @@ libraries = {
 "": SubResource("AnimationLibrary_rwi1l")
 }
 
+[node name="Mobile" type="Node" parent="Camera2D/HUD"]
+
+[node name="Joysticks" type="Node" parent="Camera2D/HUD/Mobile"]
+
+[node name="Left Joystick" parent="Camera2D/HUD/Mobile/Joysticks" instance=ExtResource("14_mbcoa")]
+z_index = -5
+z_as_relative = false
+offset_top = -398.0
+offset_bottom = -98.0
+visibility_mode = 2
+action_left = "left_joystick_left"
+action_right = "left_joystick_right"
+action_up = "left_joystick_up"
+action_down = "left_joystick_down"
+
+[node name="Right Joystick" parent="Camera2D/HUD/Mobile/Joysticks" instance=ExtResource("14_mbcoa")]
+z_index = -5
+z_as_relative = false
+offset_left = 850.0
+offset_top = -398.0
+offset_right = 1150.0
+offset_bottom = -98.0
+visibility_mode = 2
+action_left = "right_joystick_left"
+action_right = "right_joystick_right"
+action_up = "right_joystick_up"
+action_down = "right_joystick_down"
+
+[node name="Movement" type="Node" parent="Camera2D/HUD/Mobile"]
+
+[node name="Move Left" type="Button" parent="Camera2D/HUD/Mobile/Movement"]
+z_index = -5
+z_as_relative = false
+offset_top = 518.0
+offset_right = 308.0
+offset_bottom = 626.0
+icon = ExtResource("15_sfxw0")
+
+[node name="Move Right" type="Button" parent="Camera2D/HUD/Mobile/Movement"]
+z_index = -10
+z_as_relative = false
+offset_left = 842.0
+offset_top = 518.0
+offset_right = 1150.0
+offset_bottom = 626.0
+icon = ExtResource("16_auik8")
+
 [node name="Xor BG" type="CanvasLayer" parent="Camera2D"]
 layer = -2
 
@@ -1077,6 +1127,12 @@ shape = SubResource("WorldBoundaryShape2D_0o4m0")
 
 [node name="Player" parent="." instance=ExtResource("6_dtkok")]
 
+[connection signal="button_down" from="Camera2D/HUD/Mobile/Movement/Move Left" to="." method="_on_move_left_button_down"]
+[connection signal="button_up" from="Camera2D/HUD/Mobile/Movement/Move Left" to="." method="_on_move_left_button_up"]
+[connection signal="pressed" from="Camera2D/HUD/Mobile/Movement/Move Left" to="." method="_on_move_left_pressed"]
+[connection signal="button_down" from="Camera2D/HUD/Mobile/Movement/Move Right" to="." method="_on_move_right_button_down"]
+[connection signal="button_up" from="Camera2D/HUD/Mobile/Movement/Move Right" to="." method="_on_move_right_button_up"]
+[connection signal="pressed" from="Camera2D/HUD/Mobile/Movement/Move Right" to="." method="_on_move_right_pressed"]
 [connection signal="game_start" from="Title" to="." method="_on_title_game_start"]
 [connection signal="pressed" from="Title/Language Button" to="." method="_on_language_button_pressed"]
 [connection signal="death" from="Player" to="." method="_on_player_death"]

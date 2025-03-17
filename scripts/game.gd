@@ -42,6 +42,9 @@ var uk_flag = null
 @onready var scene_5_music = $"Music/Scene 5 Song"
 @onready var scene_6_music = $"Music/Scene 6 Song"
 
+@onready var move_left: Button = $"Camera2D/HUD/Mobile/Movement/Move Left"
+@onready var move_right: Button = $"Camera2D/HUD/Mobile/Movement/Move Right"
+
 @onready var language_manager = $"/root/LanguageManager"
 
 @export var language: Languages
@@ -82,6 +85,9 @@ func scene_song(scene_number: int):
 			return scene_6_music
 
 func _ready():
+	move_left.self_modulate.a = 0
+	move_right.self_modulate.a = 0
+
 	scene_1_music.volume_db = 0
 	scene_1_music.play()
 	scene_2_music.volume_db = -80
@@ -251,3 +257,26 @@ func _on_player_next_scene(
 	transition_metadata["zoom"] = Vector2(camera_zoom, camera_zoom)
 	transition_metadata["position"] = camera_coordinates
 	transitioning = true
+
+
+func _on_move_left_button_down() -> void:
+	Input.action_press("move_left")
+	move_left.self_modulate.a = 255
+
+func _on_move_left_button_up() -> void:
+	Input.action_release("move_left")
+	move_left.self_modulate.a = 0
+
+
+func _on_move_right_button_down() -> void:
+	Input.action_press("move_right")
+	move_right.self_modulate.a = 255
+
+func _on_move_right_button_up() -> void:
+	Input.action_release("move_right")
+	move_right.self_modulate.a = 0
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		Input.action_press("jump")
