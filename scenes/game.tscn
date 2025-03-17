@@ -809,6 +809,20 @@ offset_left = 575.0
 offset_right = 1154.0
 offset_bottom = 650.0
 
+[node name="ColorRect" type="ColorRect" parent="Camera2D/HUD/Mobile/Jump"]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 46.0
+offset_top = 296.0
+offset_right = 260.0
+offset_bottom = 512.0
+
+[node name="ColorRect2" type="ColorRect" parent="Camera2D/HUD/Mobile/Jump"]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 894.0
+offset_top = 298.0
+offset_right = 1108.0
+offset_bottom = 508.0
+
 [node name="Joysticks" type="Node" parent="Camera2D/HUD/Mobile"]
 
 [node name="Left Joystick" parent="Camera2D/HUD/Mobile/Joysticks" instance=ExtResource("14_mbcoa")]
