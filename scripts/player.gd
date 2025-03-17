@@ -166,6 +166,22 @@ func rumble(weak, strong, duration):
 
 	pass # Apparently not working on Godot right now?
 
+func jump(delta: float):
+	if is_on_floor():
+		velocity.y += jump_velocity
+		jump_sound.play()
+	elif current_scene >= 3:
+		velocity.y += jump_velocity*delta*2
+		if not propulsion_sound.playing:
+			propulsion_sound.play()
+
+func descend(delta: float):
+	if is_on_floor():
+		velocity.y += jump_velocity
+		jump_sound.play()
+	elif current_scene >= 3:
+		velocity.y -= jump_velocity*delta*2
+
 func _ready():
 	left_arm_position = left_arm.position
 	left_arm.rotation = 0
@@ -219,18 +235,6 @@ func _physics_process(delta):
 			var mouse_distance_vector = get_global_mouse_position()\
 				- right_arm.position
 			right_arm.rotation = mouse_distance_vector.angle() - PI/2
-
-		if Input.is_action_just_pressed("jump") and is_on_floor():
-			velocity.y += jump_velocity
-			jump_sound.play()
-		elif Input.is_action_pressed("jump") and current_scene >= 3:
-			velocity.y += jump_velocity*delta*2
-			if not propulsion_sound.playing:
-				propulsion_sound.play()
-		if Input.is_action_just_pressed("descend") and is_on_floor():
-			velocity.y -= jump_velocity
-		elif Input.is_action_pressed("descend") and current_scene >= 3:
-			velocity.y -= jump_velocity*delta*2
 
 		var left_joystick = Vector2(Input.get_axis("left_joystick_left", "left_joystick_right"),
 									Input.get_axis("left_joystick_up", "left_joystick_down"))
@@ -367,3 +371,9 @@ func _on_collision_detection_area_area_entered(area):
 func _on_collision_detection_area_area_exited(area):
 	if dead or transitioning or eating:
 		return
+
+func _on_jump_button_button_down() -> void:
+	jump(get_process_delta_time())
+
+func _on_descend_button_button_down() -> void:
+	descend(get_process_delta_time())

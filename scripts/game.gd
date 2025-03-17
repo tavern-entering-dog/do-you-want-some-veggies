@@ -45,6 +45,8 @@ var uk_flag = null
 @onready var move_left: Button = $"Camera2D/HUD/Mobile/Movement/Move Left"
 @onready var move_right: Button = $"Camera2D/HUD/Mobile/Movement/Move Right"
 
+@onready var pause: Button = $Camera2D/HUD/Mobile/Pause
+
 @onready var language_manager = $"/root/LanguageManager"
 
 @export var language: Languages
@@ -85,6 +87,7 @@ func scene_song(scene_number: int):
 			return scene_6_music
 
 func _ready():
+	pause.hide()
 	move_left.self_modulate.a = 0
 	move_right.self_modulate.a = 0
 
@@ -140,6 +143,7 @@ func _on_language_button_pressed():
 
 func _on_title_game_start():
 	game_started = true
+	pause.show()
 	player.game_started = true
 	animation_player.play("start")
 	height_text.text = ("Height: " + player.scene_data[0]["height"] if language == Languages.English
@@ -275,8 +279,3 @@ func _on_move_right_button_down() -> void:
 func _on_move_right_button_up() -> void:
 	Input.action_release("move_right")
 	move_right.self_modulate.a = 0
-
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch:
-		Input.action_press("jump")

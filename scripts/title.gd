@@ -15,6 +15,7 @@ signal game_start
 var base_title_position = 0
 var time_elapsed = 0
 var title_screen = true
+var hovering_change_language_button = false
 
 func periodic_sigmoid(h: float, k: float, t: float) -> float:
 	return h/(1+exp(-sin(k*t))) - h/2
@@ -49,11 +50,21 @@ func _input(event):
 	or (Input.get_axis("right_joystick_down", "right_joystick_up") != 0)\
 	or (Input.get_axis("right_joystick_left", "right_joystick_right") != 0)\
 	or Input.is_action_just_pressed("left_click")\
-	or Input.is_action_just_pressed("right_click"))\
+	or Input.is_action_just_pressed("right_click")\
+	or Input.is_action_just_pressed("start_game"))\
 	and not (Input.is_action_pressed("change_lang"))\
 	and not (Input.is_action_pressed("toggle_fullscreen"))\
+	and not hovering_change_language_button\
 	and time_elapsed > 1:
 		title_text.get_child(0).play('move')
 		language_button.disabled = true
 		language_button.get_child(0).play('move')
 		title_screen = false
+
+
+func _on_language_button_mouse_entered() -> void:
+	hovering_change_language_button = true
+
+
+func _on_language_button_mouse_exited() -> void:
+	hovering_change_language_button = false

@@ -65,7 +65,10 @@ var credits = [
 		"https://www.pentacom.jp/pentacom/bitfontmaker2/gallery/?id=1362",
 		"",
 		"'Credits Screen' by MiDe",
-		"https://godotengine.org/asset-library/asset/2411"
+		"https://godotengine.org/asset-library/asset/2411",
+		"",
+		"'Virtual Joystick' by MarcoFazio",
+		"https://godotengine.org/asset-library/asset/1787"
 	],[
 		"Tools Used",
 		"Developed with Godot Engine v4.3",

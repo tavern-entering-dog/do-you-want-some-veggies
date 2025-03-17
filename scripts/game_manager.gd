@@ -90,3 +90,15 @@ func _on_player_next_scene(number, _1, _2, _3, _4, _5):
 		timers.append(new_timer)
 		add_child(timers[len(timers)-1])
 		timers[len(timers)-1].start()
+
+
+func _on_pause_button_down() -> void:
+	if game_started and not dead:
+		pause_text.text = 'Juego Pausado' if language == Languages.Spanish else 'Game Paused'
+		match get_tree().paused:
+			true:
+				get_tree().paused = false
+				animation_player.play("move_back")
+			false:
+				get_tree().paused = true
+				animation_player.play("pause_text_move")
