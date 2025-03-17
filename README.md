@@ -31,3 +31,4 @@ This software is licensed under the [MIT license](LICENSE), except for the follo
 * *'JinxedWizards'* by Christina Antoinette Neofotistou.
 * *'DoggoBark Serif'* by tavern-entering dog Studios.
 * *'Credits Screen'* by MiDe.
+* *'Virtual Joystick'* by MarcoFazio.
