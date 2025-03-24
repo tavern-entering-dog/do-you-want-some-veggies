@@ -17,9 +17,9 @@ func _ready():
 		var texture_no = randi() % len(possible_textures)
 		match texture_no:
 			0, 1:
-				set_meta("nutrients", 10)
+				set_meta("nutrients", 30)
 			2:
-				set_meta("nutrients", 15)
+				set_meta("nutrients", 30)
 		if typeof(possible_textures[texture_no]) == TYPE_ARRAY:
 			for texture in possible_textures[texture_no]:
 				sprite_2d.sprite_frames.add_frame("default", texture)

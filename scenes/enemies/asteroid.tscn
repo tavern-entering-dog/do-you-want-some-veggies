@@ -23,7 +23,7 @@ metadata/edible = true
 metadata/nutrients = 30
 metadata/grabbed = false
 metadata/is_initialized = false
-metadata/damage = 50
+metadata/damage = 35
 metadata/player_position = Vector2(0, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

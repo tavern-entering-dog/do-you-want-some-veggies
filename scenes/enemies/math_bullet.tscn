@@ -17,14 +17,13 @@ script = ExtResource("1_0xh25")
 possible_textures = [ExtResource("2_e5m5g"), ExtResource("3_snydi"), ExtResource("4_3620y"), ExtResource("5_ybryq"), ExtResource("6_3as1g"), ExtResource("7_8gesi")]
 speed_limits = [6000.0, 8000.0]
 metadata/edible = true
-metadata/nutrients = 30
+metadata/nutrients = 60
 metadata/grabbed = false
 metadata/is_initialized = false
-metadata/damage = 120
+metadata/damage = 80
 metadata/player_position = Vector2(0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1, 1)
 texture = ExtResource("3_snydi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

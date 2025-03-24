@@ -87,7 +87,7 @@ var time_start = 0
 		"speed": 600.0
 	},
 	{
-		"metabolism_speed": 25,
+		"metabolism_speed": 20,
 		"max_hunger": 550,
 		"target_player_size": 12,
 		"target_player_y_position": -1750,
@@ -104,7 +104,7 @@ var time_start = 0
 		"speed": 1000.0
 	},
 	{
-		"metabolism_speed": 35,
+		"metabolism_speed": 30,
 		"max_hunger": 750,
 		"target_player_size": 15,
 		"target_player_y_position": -7750,
@@ -121,7 +121,7 @@ var time_start = 0
 		"speed": 4000.0
 	},
 	{
-		"metabolism_speed": 50,
+		"metabolism_speed": 40,
 		"max_hunger": 1250,
 		"target_player_size": 17,
 		"target_player_y_position": -9000,

@@ -16,10 +16,10 @@ script = ExtResource("1_1ja5y")
 possible_textures = [ExtResource("2_uuene"), ExtResource("3_i2ly2"), [ExtResource("4_hayv8"), ExtResource("5_qykix")]]
 speed_limits = [1500.0, 2000.0]
 metadata/edible = true
-metadata/nutrients = 20
+metadata/nutrients = 30
 metadata/grabbed = false
 metadata/is_initialized = false
-metadata/damage = 33
+metadata/damage = 20
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 autoplay = "default"

@@ -206,7 +206,9 @@ func _process(delta):
 			roof.play("destroy")
 			break_particles.emitting = true
 			roof_broken = true
-			hud.add_child(load("res://scenes/crt_screen_shader.tscn").instantiate())
+			var crt_shader = load("res://scenes/crt_screen_shader.tscn").instantiate()
+			hud.add_child(crt_shader)
+			hud.move_child(crt_shader, 0)
 
 		if (transition_metadata["number"] == 3) and (player.scale.y >= 8):
 			for child in hud.get_children():

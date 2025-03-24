@@ -87,7 +87,6 @@ autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(4.85, 0)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_3pjg7")
 metadata/edible = true
 metadata/nutrients = 25
